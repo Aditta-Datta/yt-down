@@ -44,7 +44,7 @@
         }
 
         // Redirect to streaming endpoint
-        const title = data.title.replace(/[^a-zA-Z0-9 ]/g, '');
+        const title = data.author.replace(/[^a-zA-Z0-9 ]/g, '');
         window.location.href = `/${type}?link=${encodeURIComponent(url)}&quality=${quality}&title=${encodeURIComponent(title)}`;
       } catch (err) {
         status.textContent = 'Error occurred!';
@@ -69,7 +69,6 @@
           status.textContent = 'Links fetched successfully!';
           linksDiv.innerHTML = `
             <p><strong>Author:</strong> ${data.author}</p>
-            <p><strong>Title:</strong> ${data.title}</p>
             <p><strong>Video Links:</strong></p>
             <p>High Quality: <a href="${data.video.high}" target="_blank">Download Video (High)</a></p>
             <p>Low Quality: <a href="${data.video.low}" target="_blank">Download Video (Low)</a></p>
