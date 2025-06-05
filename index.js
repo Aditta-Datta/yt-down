@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// /yt endpoint to return JSON with video info and streaming links
+// /yt endpoint to return JSON with streaming links
 app.get('/yt', async (req, res) => {
   const { link } = req.query;
   if (!link || !ytdl.validateURL(link)) {
@@ -24,13 +24,11 @@ app.get('/yt', async (req, res) => {
     const info = await ytdl.getInfo(link);
     const title = info.videoDetails.title.replace(/[^a-zA-Z0-9 ]/g, '');
     const author = info.videoDetails.author.name;
-    const videoTitle = info.videoDetails.title;
 
     // Generate streaming URLs
     const baseUrl = `${req.protocol}://${req.get('host')}`;
     res.json({
       author,
-      title: videoTitle,
       video: {
         high: `${baseUrl}/video?link=${encodeURIComponent(link)}&quality=high&title=${encodeURIComponent(title)}`,
         low: `${baseUrl}/video?link=${encodeURIComponent(link)}&quality=low&title=${encodeURIComponent(title)}`
